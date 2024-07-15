@@ -1,29 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const TodoItem = ({ todo, onUpdate, onDelete }) => {
+  const [editing, setediting] = useState(false);
+  const [cur, setCur] = useState({ title: '', completed: null })
+
+  const handleEdit = () => {
+    setCur(todo);
+    setediting(true);
+  }
+
   const handleCheckboxChange = () => {
-    onUpdate(todo.id, { completed: !todo.completed });
+    setCur(prev => ({ ...prev, completed: !todo.completed }));
   };
 
   const handleTitleChange = (e) => {
-    onUpdate(todo.id, { title: e.target.value });
+    setCur(prev => ({ ...prev, title: e.target.value }));
   };
 
+  const handleSubmit = () => {
+    const { id, ...rest } = cur;
+    onUpdate(todo.id, { ...rest })
+    setediting(false);
+  }
+
+  const { completed, title } = todo;
   return (
-    <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
-      <input
-        type="checkbox"
-        checked={todo.completed}
-        onChange={handleCheckboxChange}
-        className="checkbox"
-      />
-      <input
-        type="text"
-        value={todo.title}
-        onChange={handleTitleChange}
-        className="input"
-      />
-      <button onClick={() => onDelete(todo.id)} className="button">Delete</button>
+    <div className={`todo-item ${completed ? 'completed' : ''}`}>
+      <div style={{ display: 'inline-flex', flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+
+        {!editing && <div style={{ color: completed ? 'green' : 'red', fontSize: '1em', fontWeight: 'bold' }}>{completed ? '✓' : 'X'}</div>}
+        {!editing && <div>{title}</div>}
+        {editing && <>
+
+          <input
+            type="checkbox"
+            defaultChecked={todo.completed}
+            onChange={handleCheckboxChange}
+            className="checkbox"
+          />
+          <input
+            type="text"
+            defaultValue={todo.title}
+            onChange={handleTitleChange}
+            className="input"
+          />
+        </>}
+      </div>
+      <div style={{ display: 'inline-flex' }}>
+        <button onClick={() => !editing ? handleEdit() : handleSubmit()} className="button">{editing ? 'Save' : 'Edit'}</button>
+        <button onClick={() => onDelete(todo.id)} className="button">Delete</button>
+      </div>
     </div>
   );
 };

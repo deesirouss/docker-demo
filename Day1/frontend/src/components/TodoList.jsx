@@ -52,21 +52,27 @@ const TodoList = () => {
     };
 
     return (
-        <div>
-            <h1>Todo List</h1>
-            <input
-                type="text"
-                value={newTodo}
-                onChange={(e) => setNewTodo(e.target.value)}
-                placeholder="Add a new todo"
-            />
-            <br />
-            <button onClick={addTodo}>Add</button>
-            <br />
-            <div>
-                {todos.map((todo) => (
-                    <TodoItem key={todo.id} todo={todo} onUpdate={updateTodo} onDelete={deleteTodo} />
-                ))}
+        <div style={{ display: 'flex', flexDirection: 'row', height: '60vh' }}>
+            <div style={{ padding: '20px', width: '25%', borderRight: '5px solid white' }}>
+                <h2>Create a Todo</h2>
+                <input
+                    type="text"
+                    value={newTodo}
+                    onChange={(e) => setNewTodo(e.target.value)}
+                    placeholder="Add a new todo"
+                    className='input'
+                />
+                <br />
+                <br />
+                <button onClick={addTodo}>Add</button>
+            </div>
+            <div style={{ padding: '20px' }}>
+                <h2>Todo List</h2>
+                <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', flexBasis: '50%' }}>
+                    {todos.map((todo) => (
+                        <TodoItem key={todo.id} todo={todo} onUpdate={updateTodo} onDelete={deleteTodo} />
+                    ))}
+                </div>
             </div>
         </div>
     );

@@ -6,11 +6,12 @@ const knex = require('knex')(require('../knexfile').development);
 router.post('/todos', async (req, res) => {
   try {
     const { title, completed } = req.body;
-    const [id] = await knex.raw(
+    const all = await knex.raw(
       `INSERT INTO todos (title, completed) VALUES (?, ?) RETURNING id`,
       [title, completed]
     );
-    res.status(201).json(id);
+    const id = all.rows[0].id
+    res.status(201).json({ id, ...req.body });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
