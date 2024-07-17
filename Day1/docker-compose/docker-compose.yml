@@ -15,13 +15,6 @@ services:
     build:
       context: ./backend
     container_name: backend
-    develop:
-      watch:
-        - path: ./backend
-          action: sync
-          target: /app/
-          ignore:
-            - node_modules/
     ports:
       - "3000:3000"
     depends_on:
@@ -39,12 +32,6 @@ services:
   frontend:
     build:
       context: ./frontend
-    develop:
-      watch:
-        - path: ./frontend/src
-          action: rebuild
-          ignore:
-            - node_modules/
     container_name: frontend
     ports:
       - "80:80"
