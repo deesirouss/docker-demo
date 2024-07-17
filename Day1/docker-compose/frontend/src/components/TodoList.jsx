@@ -52,7 +52,7 @@ const TodoList = () => {
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', height: '60vh' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', height: '60vh', width: '100vw' }}>
             <div style={{ padding: '20px', width: '25%', borderRight: '5px solid white' }}>
                 <h2>Create a Todo</h2>
                 <input
@@ -66,7 +66,7 @@ const TodoList = () => {
                 <br />
                 <button onClick={addTodo}>Add</button>
             </div>
-            <div style={{ padding: '20px' }}>
+            <div style={{ padding: '20px', flex: 1 }}>
                 <h2>Todo List</h2>
                 <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', flexBasis: '50%' }}>
                     {todos.map((todo) => (
